@@ -1,0 +1,252 @@
+-- HanHub.lua - VERSION WITH VISUAL UI PREVIEW
+print("[Han Hub] Loading Enhanced UI Version...")
+
+-- ===== BUAT UI YANG LEBIH MENARIK =====
+local PlayerGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "HanHubUI"
+ScreenGui.Parent = PlayerGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+-- Main Frame
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0, 400, 0, 500)
+MainFrame.Position = UDim2.new(0.5, -200, 0.5, -250)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+MainFrame.BackgroundTransparency = 0.1
+MainFrame.BorderSizePixel = 0
+MainFrame.Parent = ScreenGui
+
+-- Corner Radius
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = MainFrame
+
+-- Top Bar
+local TopBar = Instance.new("Frame")
+TopBar.Size = UDim2.new(1, 0, 0, 50)
+TopBar.BackgroundColor3 = Color3.fromRGB(0, 100, 200)
+TopBar.BorderSizePixel = 0
+TopBar.Parent = MainFrame
+
+local TopCorner = Instance.new("UICorner")
+TopCorner.CornerRadius = UDim.new(0, 12)
+TopCorner.Parent = TopBar
+
+-- Title
+local Title = Instance.new("TextLabel")
+Title.Text = "HAN HUB - VILLAGE EDITION"
+Title.Size = UDim2.new(1, 0, 1, 0)
+Title.BackgroundTransparency = 1
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 18
+Title.Parent = TopBar
+
+-- Close Button
+local CloseButton = Instance.new("TextButton")
+CloseButton.Text = "X"
+CloseButton.Size = UDim2.new(0, 40, 0, 40)
+CloseButton.Position = UDim2.new(1, -45, 0, 5)
+CloseButton.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
+CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseButton.Font = Enum.Font.GothamBold
+CloseButton.TextSize = 16
+CloseButton.Parent = TopBar
+
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
+
+-- Tab Buttons
+local Tabs = {"Farm", "Player", "Teleport", "Info"}
+local TabButtons = {}
+local ContentFrame = Instance.new("ScrollingFrame")
+ContentFrame.Size = UDim2.new(1, -20, 1, -100)
+ContentFrame.Position = UDim2.new(0, 10, 0, 70)
+ContentFrame.BackgroundTransparency = 1
+ContentFrame.ScrollBarThickness = 6
+ContentFrame.CanvasSize = UDim2.new(0, 0, 0, 800)
+ContentFrame.Parent = MainFrame
+
+-- Buat Tab Bar
+local TabBar = Instance.new("Frame")
+TabBar.Size = UDim2.new(1, -20, 0, 40)
+TabBar.Position = UDim2.new(0, 10, 0, 55)
+TabBar.BackgroundTransparency = 1
+TabBar.Parent = MainFrame
+
+for i, tabName in ipairs(Tabs) do
+    local TabButton = Instance.new("TextButton")
+    TabButton.Text = tabName
+    TabButton.Size = UDim2.new(0.24, 0, 1, 0)
+    TabButton.Position = UDim2.new((i-1)*0.25, 0, 0, 0)
+    TabButton.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+    TabButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+    TabButton.Font = Enum.Font.Gotham
+    TabButton.TextSize = 14
+    TabButton.Parent = TabBar
+    
+    local TabCorner = Instance.new("UICorner")
+    TabCorner.CornerRadius = UDim.new(0, 6)
+    TabCorner.Parent = TabButton
+    
+    table.insert(TabButtons, TabButton)
+    
+    -- Tab Content
+    local TabContent = Instance.new("Frame")
+    TabContent.Size = UDim2.new(1, 0, 0, 300)
+    TabContent.Position = UDim2.new(0, 0, 0, (i-1)*320)
+    TabContent.BackgroundTransparency = 1
+    TabContent.Visible = (i == 1)
+    TabContent.Name = tabName .. "Content"
+    TabContent.Parent = ContentFrame
+    
+    -- Isi konten per tab
+    if tabName == "Farm" then
+        local FarmLabel = Instance.new("TextLabel")
+        FarmLabel.Text = "AUTO FARMING OPTIONS"
+        FarmLabel.Size = UDim2.new(1, 0, 0, 30)
+        FarmLabel.BackgroundTransparency = 1
+        FarmLabel.TextColor3 = Color3.fromRGB(0, 200, 100)
+        FarmLabel.Font = Enum.Font.GothamBold
+        FarmLabel.TextSize = 16
+        FarmLabel.Parent = TabContent
+        
+        -- Toggle Auto Farm
+        local ToggleFrame = Instance.new("Frame")
+        ToggleFrame.Size = UDim2.new(1, 0, 0, 40)
+        ToggleFrame.Position = UDim2.new(0, 0, 0, 40)
+        ToggleFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+        ToggleFrame.Parent = TabContent
+        
+        local ToggleCorner = Instance.new("UICorner")
+        ToggleCorner.CornerRadius = UDim.new(0, 8)
+        ToggleCorner.Parent = ToggleFrame
+        
+        local ToggleLabel = Instance.new("TextLabel")
+        ToggleLabel.Text = "Auto Farm Wood"
+        ToggleLabel.Size = UDim2.new(0.7, 0, 1, 0)
+        ToggleLabel.BackgroundTransparency = 1
+        ToggleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        ToggleLabel.Font = Enum.Font.Gotham
+        ToggleLabel.TextSize = 14
+        ToggleLabel.TextXAlignment = Enum.TextXAlignment.Left
+        ToggleLabel.Parent = ToggleFrame
+        
+        local ToggleButton = Instance.new("TextButton")
+        ToggleButton.Text = "OFF"
+        ToggleButton.Size = UDim2.new(0.2, 0, 0.7, 0)
+        ToggleButton.Position = UDim2.new(0.75, 0, 0.15, 0)
+        ToggleButton.BackgroundColor3 = Color3.fromRGB(200, 60, 60)
+        ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        ToggleButton.Font = Enum.Font.GothamBold
+        ToggleButton.TextSize = 12
+        ToggleButton.Parent = ToggleFrame
+        
+        local ToggleCorner2 = Instance.new("UICorner")
+        ToggleCorner2.CornerRadius = UDim.new(0, 6)
+        ToggleCorner2.Parent = ToggleButton
+        
+        ToggleButton.MouseButton1Click:Connect(function()
+            if ToggleButton.Text == "OFF" then
+                ToggleButton.Text = "ON"
+                ToggleButton.BackgroundColor3 = Color3.fromRGB(60, 200, 80)
+                game:GetService("StarterGui"):SetCore("SendNotification",{
+                    Title = "Han Hub",
+                    Text = "Auto Farm Wood: ACTIVATED",
+                    Duration = 3
+                })
+            else
+                ToggleButton.Text = "OFF"
+                ToggleButton.BackgroundColor3 = Color3.fromRGB(200, 60, 60)
+                game:GetService("StarterGui"):SetCore("SendNotification",{
+                    Title = "Han Hub",
+                    Text = "Auto Farm Wood: DEACTIVATED",
+                    Duration = 3
+                })
+            end
+        end)
+        
+    elseif tabName == "Player" then
+        local PlayerLabel = Instance.new("TextLabel")
+        PlayerLabel.Text = "PLAYER SETTINGS"
+        PlayerLabel.Size = UDim2.new(1, 0, 0, 30)
+        PlayerLabel.BackgroundTransparency = 1
+        PlayerLabel.TextColor3 = Color3.fromRGB(0, 150, 255)
+        PlayerLabel.Font = Enum.Font.GothamBold
+        PlayerLabel.TextSize = 16
+        PlayerLabel.Parent = TabContent
+        
+        -- WalkSpeed Slider
+        local SpeedLabel = Instance.new("TextLabel")
+        SpeedLabel.Text = "Walk Speed: 16"
+        SpeedLabel.Size = UDim2.new(1, 0, 0, 25)
+        SpeedLabel.Position = UDim2.new(0, 0, 0, 40)
+        SpeedLabel.BackgroundTransparency = 1
+        SpeedLabel.TextColor3 = Color3.fromRGB(200, 200, 255)
+        SpeedLabel.Font = Enum.Font.Gotham
+        SpeedLabel.TextSize = 14
+        SpeedLabel.Parent = TabContent
+        
+    elseif tabName == "Info" then
+        local InfoLabel = Instance.new("TextLabel")
+        InfoLabel.Text = "HUB INFORMATION"
+        InfoLabel.Size = UDim2.new(1, 0, 0, 30)
+        InfoLabel.BackgroundTransparency = 1
+        InfoLabel.TextColor3 = Color3.fromRGB(255, 180, 0)
+        InfoLabel.Font = Enum.Font.GothamBold
+        InfoLabel.TextSize = 16
+        InfoLabel.Parent = TabContent
+        
+        local Desc = Instance.new("TextLabel")
+        Desc.Text = "Han Hub v1.3\nMade for Village Survival\nFeatures:\n• Auto Farming\n• Player Utilities\n• Teleport System\n• Clean UI\n\nPress F9 to toggle UI"
+        Desc.Size = UDim2.new(1, 0, 0, 200)
+        Desc.Position = UDim2.new(0, 0, 0, 40)
+        Desc.BackgroundTransparency = 1
+        Desc.TextColor3 = Color3.fromRGB(220, 220, 220)
+        Desc.Font = Enum.Font.Gotham
+        Desc.TextSize = 13
+        Desc.TextYAlignment = Enum.TextYAlignment.Top
+        Desc.Parent = TabContent
+    end
+end
+
+-- Fungsi untuk ganti tab
+for i, button in ipairs(TabButtons) do
+    button.MouseButton1Click:Connect(function()
+        for _, content in ipairs(ContentFrame:GetChildren()) do
+            if content:IsA("Frame") then
+                content.Visible = false
+            end
+        end
+        ContentFrame:FindFirstChild(Tabs[i] .. "Content").Visible = true
+        
+        -- Update button colors
+        for _, btn in ipairs(TabButtons) do
+            btn.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+        end
+        button.BackgroundColor3 = Color3.fromRGB(0, 100, 200)
+    end)
+end
+
+-- Toggle UI dengan F9
+local UIVisible = true
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.F9 then
+        UIVisible = not UIVisible
+        ScreenGui.Enabled = UIVisible
+    end
+end)
+
+-- Notification awal
+game:GetService("StarterGui"):SetCore("SendNotification",{
+    Title = "HAN HUB LOADED",
+    Text = "UI is ready! Press F9 to hide/show",
+    Duration = 5,
+    Icon = "rbxassetid://4483345998"
+})
+
+print("[Han Hub] Enhanced UI loaded successfully!")
+return ScreenGui
